@@ -44,10 +44,9 @@ the documentation in =build/docs/javadoc=.
 
 Mehul
      
- -----
+-----
+Original README was written by
 
- Original README was written by
-
- Aaron.\\
- arenn@urbanophile.com\\
- http://www.urbanophile.com/arenn/
+Aaron. \\
+arenn@urbanophile.com \\
+http://www.urbanophile.com/arenn/
