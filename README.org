@@ -46,10 +46,11 @@ Mehul
      
 -----
 
-#+BEGIN_VERSE
 Original README was written by
 
 Aaron.
+
 arenn@urbanophile.com 
+
 http://www.urbanophile.com/arenn/
-#+END_VERSE
+
