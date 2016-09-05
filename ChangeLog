@@ -1,3 +1,10 @@
+
+For release 1.0.14-mns00001 (2016/09/05)
+
+Mehul Sanghvi (mehul.sanghvi@gmail.com) provided Gradle support, fixed
+Javadoc warnings and errors, applied all open pull-requests found at
+https://github.com/arenn/java-getopt/pulls (P/Rs 1, 4, 6, 7, 9, 10)
+
 For release 1.0.14 (2012/02/08)
 
 David Zhang (david290@qq.com) provided Chinese language messages.

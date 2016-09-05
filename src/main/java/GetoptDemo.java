@@ -1,3 +1,5 @@
+package gnu.getopt;  // https://github.com/arenn/java-getopt/pull/1
+
 import gnu.getopt.LongOpt;
 import gnu.getopt.Getopt;
 

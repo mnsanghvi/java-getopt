@@ -85,7 +85,6 @@ import java.text.MessageFormat;
   * non-option argv element.
   * <p>
   * Here is a basic example of using Getopt:
-  * <p>
   * <pre>
   * Getopt g = new Getopt("testprog", argv, "ab:c::d");
   * //
@@ -260,7 +259,6 @@ import java.text.MessageFormat;
   * <p>
   * Here is an expanded Getopt example using long options and various
   * techniques described above:
-  * <p>
   * <pre>
   * int c;
   * String arg;
@@ -336,7 +334,7 @@ import java.text.MessageFormat;
   *          break;
   *     }
   * //
-  * for (int i = g.getOptind(); i < argv.length ; i++)
+  * for (int i = g.getOptind(); i &lt; argv.length ; i++)
   *   System.out.println("Non option argv element: " + argv[i] + "\n");
   * </pre>
   * <p>
@@ -363,13 +361,14 @@ import java.text.MessageFormat;
   * use the appropriate access methods.
   * <p>
   * Please send all bug reports, requests, and comments to
-  * <a href="mailto:arenn@urbanophile.com">arenn@urbanophile.com</a>.
+  * <a href="mailto:mehul.sanghvi@gmail.com">Mehul Sanghvi</a>.
   *
   * @version 1.0.7
   *
   * @author Roland McGrath (roland@gnu.ai.mit.edu)
   * @author Ulrich Drepper (drepper@cygnus.com)
   * @author Aaron M. Renn (arenn@urbanophile.com)
+  * @author Mehul Sanghvi (mehul.sanghvi@gmail.com)
   *
   * @see LongOpt
   */
@@ -680,6 +679,8 @@ setOptstring(String optstring)
   *
   * Otherwise, `optind' communicates from one call to the next
   * how much of ARGV has been scanned so far.  
+  * 
+  * @return optind
   */
 public int
 getOptind()
@@ -729,6 +730,8 @@ setArgv(String[] argv)
   * Also, when `ordering' is RETURN_IN_ORDER,
   * each non-option ARGV-element is returned here.
   * No set method is provided because setting this variable has no effect.
+  *
+  * @return optarg
   */
 public String
 getOptarg()
@@ -743,6 +746,8 @@ getOptarg()
   * invalid option is encountered.  This can be suppressed (or re-enabled)
   * by calling this method.  There is no get method for this variable 
   * because if you can't remember the state you set this to, why should I?
+  * 
+  * @param opterr Instance variable for printing of error when invalid options are encountered.
   */
 public void
 setOpterr(boolean opterr)
@@ -756,6 +761,8 @@ setOpterr(boolean opterr)
   * When getopt() encounters an invalid option, it stores the value of that
   * option in optopt which can be retrieved with this method.  There is
   * no corresponding set method because setting this variable has no effect.
+  *
+  * @return optopt
   */
 public int
 getOptopt()
@@ -768,6 +775,8 @@ getOptopt()
 /**
   * Returns the index into the array of long options (NOT argv) representing
   * the long option that was found.
+  * 
+  * @return longind
   */
 public int
 getLongind()
@@ -783,6 +792,8 @@ getLongind()
   * It leaves the longer segment in the right place overall,
   * but it consists of two parts that need to be swapped next.
   * This method is used by getopt() for argument permutation.
+  *
+  * @param argv The String array passed as the command line to the program.
   */
 protected void
 exchange(String[] argv)
@@ -841,8 +852,6 @@ exchange(String[] argv)
   * Put in a separate method because this needs to be done twice.  (The
   * C getopt authors just copy-pasted the code!).
   *
-  * @param longind A buffer in which to store the 'val' field of found LongOpt
-  *
   * @return Various things depending on circumstances
   */
 protected int
@@ -895,7 +904,7 @@ checkLongOption()
       if (opterr)
         {
           Object[] msgArgs = { progname, argv[optind] };
-          System.err.println(MessageFormat.format(
+          throw new IllegalArgumentException(MessageFormat.format(
                              _messages.getString("getopt.ambigious"), 
                              msgArgs));
         }
@@ -928,7 +937,7 @@ checkLongOption()
                   if (argv[optind - 1].startsWith("--"))
                     {
                       Object[] msgArgs = { progname, pfound.name };
-                      System.err.println(MessageFormat.format(
+                      throw new IllegalArgumentException(MessageFormat.format(
                                   _messages.getString("getopt.arguments1"), 
                                   msgArgs));
                     }
@@ -938,7 +947,7 @@ checkLongOption()
                       Object[] msgArgs = { progname, new 
                                Character(argv[optind-1].charAt(0)).toString(),
                                pfound.name };
-                      System.err.println(MessageFormat.format(
+                      throw new IllegalArgumentException(MessageFormat.format(
                                _messages.getString("getopt.arguments2"), 
                                msgArgs));
                     }
@@ -962,7 +971,7 @@ checkLongOption()
               if (opterr)
                 {
                   Object[] msgArgs = { progname, argv[optind-1] };
-                  System.err.println(MessageFormat.format(
+                  throw new IllegalArgumentException(MessageFormat.format(
                                      _messages.getString("getopt.requires"), 
                                      msgArgs));
                 }
@@ -1132,7 +1141,7 @@ getopt()
               if (argv[optind].startsWith("--"))
                 {
                   Object[] msgArgs = { progname, nextchar };
-                  System.err.println(MessageFormat.format(
+                  throw new IllegalArgumentException(MessageFormat.format(
                                    _messages.getString("getopt.unrecognized"), 
                                    msgArgs));
                 }
@@ -1141,7 +1150,7 @@ getopt()
                   Object[] msgArgs = { progname, new 
                                  Character(argv[optind].charAt(0)).toString(), 
                                  nextchar };
-                  System.err.println(MessageFormat.format(
+                  throw new IllegalArgumentException(MessageFormat.format(
                                  _messages.getString("getopt.unrecognized2"), 
                                  msgArgs));
                 }
@@ -1178,14 +1187,14 @@ getopt()
               // 1003.2 specifies the format of this message
               Object[] msgArgs = { progname, new 
                                    Character((char)c).toString() };
-              System.err.println(MessageFormat.format(
+              throw new IllegalArgumentException(MessageFormat.format(
                             _messages.getString("getopt.illegal"), msgArgs));
             }
           else
             {
               Object[] msgArgs = { progname, new 
                                    Character((char)c).toString() };
-              System.err.println(MessageFormat.format(
+              throw new IllegalArgumentException(MessageFormat.format(
                             _messages.getString("getopt.invalid"), msgArgs));
             }
         }
@@ -1210,7 +1219,7 @@ getopt()
               // 1003.2 specifies the format of this message. 
               Object[] msgArgs = { progname, new 
                                    Character((char)c).toString() };
-              System.err.println(MessageFormat.format(
+              throw new IllegalArgumentException(MessageFormat.format(
                             _messages.getString("getopt.requires2"), msgArgs));
             }
 
@@ -1228,7 +1237,9 @@ getopt()
           optarg  = argv[optind];
         }
 
-      c = checkLongOption();
+      if (long_options != null) {
+	  c = checkLongOption();
+      }
 
       if (longopt_handled)
         return(c);
@@ -1272,7 +1283,7 @@ getopt()
                   // 1003.2 specifies the format of this message
                   Object[] msgArgs = { progname, new 
                                        Character((char)c).toString() };
-                  System.err.println(MessageFormat.format(
+                  throw new IllegalArgumentException(MessageFormat.format(
                             _messages.getString("getopt.requires2"), msgArgs));
                 }
 
@@ -1302,7 +1313,7 @@ getopt()
                           // 1003.2 specifies the format of this message
                           Object[] msgArgs = { progname, new 
                                                Character((char)c).toString() };
-                          System.err.println(MessageFormat.format(
+                          throw new IllegalArgumentException(MessageFormat.format(
                              _messages.getString("getopt.requires2"), msgArgs));
                         }
 
